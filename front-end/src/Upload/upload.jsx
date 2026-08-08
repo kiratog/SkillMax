@@ -44,7 +44,7 @@ export default function ResumeUpload({ user, onRequireAuth, onAnalyzed }) {
     formData.append("resume", file);
 
     try {
-      const res = await fetch("http://localhost:5001/api/resume/upload", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/resume/upload`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
