@@ -154,7 +154,9 @@ export default function ResumeUpload({ user, onRequireAuth, onAnalyzed }) {
 
           <div className="flex flex-col sm:flex-row items-center gap-3 w-full mt-1">
             <button
-              onClick={() => alert("Proceeding to Target Role Skill Gap Analysis (Phase 2)!")}
+              onClick={() => {
+                if (onAnalyzed) onAnalyzed(resumeData);
+              }}
               className="w-full sm:flex-1 py-2.5 px-4 rounded-xl bg-amber-500 hover:bg-amber-400 text-zinc-950 font-semibold text-xs transition-colors cursor-pointer"
             >
               Analyze Skills & Detect Gaps →
