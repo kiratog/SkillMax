@@ -23,8 +23,8 @@ export default function AuthModal({ isOpen, onClose, onAuthSuccess }) {
     setError('');
 
     const endpoint = isLogin
-      ? 'http://localhost:5001/api/auth/login'
-      : 'http://localhost:5001/api/auth/register';
+      ? `${import.meta.env.VITE_API_URL}/api/auth/login`
+      : `${import.meta.env.VITE_API_URL}/api/auth/register`;
 
     try {
       const res = await fetch(endpoint, {
