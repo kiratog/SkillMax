@@ -1,0 +1,7 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Inter', sans-serif;
+  --font-inter: 'Inter', sans-serif;
+  --font-logo: "Rubik Doodle Triangles", system-ui;
+}
