@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import './App.css';
 import AmberBlobBackground from './BlobBackground';
-import { NavBar } from './Navbar/navbar';
+import { NavBar } from './navbar/navbar';
 import ResumeUpload from './Upload/upload';
 import RoleSelector from './RoleSelector/RoleSelector';
 import SkillGapDashboard from './SkillGapDashboard/SkillGapDashboard';
