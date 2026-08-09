@@ -33,7 +33,6 @@ export default function AmberBlobBackground({
     const updateSize = () => {
       const width = window.innerWidth;
       const height = window.innerHeight;
-      // Cap DPR to 1.0 to guarantee ultra-fast 60 FPS performance without heating device
       const dpr = Math.min(window.devicePixelRatio || 1, 1.0);
       renderer.setSize(width, height);
       renderer.setPixelRatio(dpr);
@@ -128,7 +127,7 @@ export default function AmberBlobBackground({
     };
     window.addEventListener('resize', handleResize);
 
-    // 7. Ultra-Fast Render Loop (Zero CPU vertex recalculations!)
+    // 7. Ultra-Fast Render Loop
     let animId;
     const clock = new THREE.Clock();
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -137,20 +136,16 @@ export default function AmberBlobBackground({
       if (!reduceMotion) {
         const elapsedTime = clock.getElapsedTime();
 
-        // Smooth mouse lerp
         mouse.x += (targetMouse.x - mouse.x) * 0.05;
         mouse.y += (targetMouse.y - mouse.y) * 0.05;
 
-        // Move cursor light
         mouseLight.position.x = mouse.x * 5.5;
         mouseLight.position.y = mouse.y * 5.5;
         mouseLight.position.z = 4;
 
-        // GPU-accelerated rotation (silky smooth 60 FPS)
         icosphereMesh.rotation.y = elapsedTime * 0.2 + mouse.x * 0.6;
         icosphereMesh.rotation.x = elapsedTime * 0.12 + mouse.y * 0.4;
 
-        // Particle field slow counter-rotation
         particleSystem.rotation.y = -elapsedTime * 0.05;
 
         renderer.render(scene, camera);
@@ -160,7 +155,6 @@ export default function AmberBlobBackground({
 
     animId = requestAnimationFrame(animate);
 
-    // Cleanup
     return () => {
       cancelAnimationFrame(animId);
       window.removeEventListener('pointermove', handlePointerMove);
@@ -177,20 +171,20 @@ export default function AmberBlobBackground({
   return (
     <div
       ref={containerRef}
-      className={`relative w-full h-full min-h-screen bg-black overflow-hidden select-none ${className}`}
+      className={`relative w-full min-h-screen bg-black select-none ${className}`}
       style={{ backgroundColor: '#000000' }}
     >
-      {/* 3D Interactive Low-Poly Icosphere Canvas */}
+      {/* Fixed 3D Interactive Low-Poly Icosphere Backdrop */}
       <canvas
         ref={canvasRef}
-        className="absolute inset-0 w-full h-full pointer-events-none block"
+        className="fixed inset-0 w-full h-full pointer-events-none block z-0"
       />
 
       {/* Subtle radial amber background glow */}
-      <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_center,rgba(245,158,11,0.12)_0%,transparent_70%)]" />
+      <div className="fixed inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_center,rgba(245,158,11,0.12)_0%,transparent_70%)] z-0" />
 
       {/* Children Content Overlay */}
-      <div className="relative z-10 w-full h-full">
+      <div className="relative z-10 w-full min-h-screen flex flex-col">
         {children}
       </div>
     </div>
